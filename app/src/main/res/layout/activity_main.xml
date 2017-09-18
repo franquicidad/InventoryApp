@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/store"
+        android:layout_marginTop="108dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/imageView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Manages your business locally"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/carro_de_la_compra_vista_lateral_vacia_318_50806"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="122dp"
+        android:scaleType="centerCrop"
+
+        android:backgroundTint="#faf8f8"
+        android:id="@+id/floatingActionButton" />
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/envio"
+        android:backgroundTint="#faf8f8"
+        android:scaleType="centerCrop"
+
+        android:layout_alignTop="@+id/floatingActionButton"
+        android:layout_toStartOf="@+id/imageView" />
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/inventario"
+        android:scaleType="centerCrop"
+        android:backgroundTint="#faf8f8"
+        android:layout_alignTop="@+id/floatingActionButton"
+        android:layout_toEndOf="@+id/imageView" />
+
+</RelativeLayout>
