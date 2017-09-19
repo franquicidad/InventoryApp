@@ -24,6 +24,7 @@
         android:id="@+id/textView" />
 
     <android.support.design.widget.FloatingActionButton
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/carro_de_la_compra_vista_lateral_vacia_318_50806"
@@ -33,23 +34,25 @@
         android:scaleType="centerCrop"
 
         android:backgroundTint="#faf8f8"
-        android:id="@+id/floatingActionButton" />
+        android:id="@+id/PurchaseButton" />
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/envio"
         android:backgroundTint="#faf8f8"
         android:scaleType="centerCrop"
+        android:id="@+id/ShippingButton"
 
-        android:layout_alignTop="@+id/floatingActionButton"
-        android:layout_toStartOf="@+id/imageView" />
+        android:layout_alignTop="@+id/PurchaseButton"
+        android:layout_toEndOf="@+id/textView" />
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/inventario"
         android:scaleType="centerCrop"
         android:backgroundTint="#faf8f8"
-        android:layout_alignTop="@+id/floatingActionButton"
-        android:layout_toEndOf="@+id/imageView" />
+        android:id="@+id/inventoryButton"
+        android:layout_alignTop="@+id/PurchaseButton"
+        android:layout_toStartOf="@+id/imageView" />
 
 </RelativeLayout>
