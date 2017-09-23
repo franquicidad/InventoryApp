@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="product_options">
+        <item>Headphones</item>
+        <item>Guitar jackson</item>
+        <item>Guitar Esp</item>
+        <item>Guitar Fender</item>
+        <item>Mapex Drums</item>
+        <item>Tama Drums</item>
+
+    </string-array>
+</resources>

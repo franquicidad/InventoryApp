@@ -25,25 +25,6 @@ public class MainActivity extends AppCompatActivity {
          *
          */
 
-
-        floatingActionButtonPurchase=(FloatingActionButton)findViewById(R.id.PurchaseButton);
-
-        floatingActionButtonPurchase.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent purchaseInt=new Intent(getBaseContext(),PurchasesActivity.class);
-                startActivity(purchaseInt);
-            }
-        });
-
-        floatingActionButtonShip=(FloatingActionButton)findViewById(R.id.ShippingButton);
-        floatingActionButtonShip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent shipInt=new Intent(getBaseContext(),ShippingActivity.class);
-                startActivity(shipInt);
-            }
-        });
         floatingActionButtonInv=(FloatingActionButton)findViewById(R.id.inventoryButton);
         floatingActionButtonInv.setOnClickListener(new View.OnClickListener() {
             @Override

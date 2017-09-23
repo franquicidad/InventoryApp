@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PurchasesActivity"
+        <activity android:name=".EditorActivity"
             android:label="Purchases"
             android:parentActivityName=".MainActivity" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -34,15 +34,13 @@
                 android:value=".MainActivity" />
 
         </activity>
-        <activity android:name=".ShippingActivity"
-            android:label="Shipping orders"
-            android:parentActivityName=".MainActivity" >
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
 
-        </activity>
+        <provider
+            android:authorities="com.example.mac.inventoryapp"
+            android:name=".Data.StoreProvider"
+            android:exported="false">
+
+        </provider>
     </application>
 
 </manifest>

@@ -10,8 +10,33 @@
 
     </ListView>
 
+    <RelativeLayout
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+        <ImageView
+
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/espacio_vacio"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/vacio" />
+        <TextView
+            android:id="@+id/desImagenVacio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Null!!"
+            android:textSize="40sp"
+            android:layout_marginTop="14dp"
+            android:layout_below="@+id/vacio"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
+        android:id="@+id/AgregarInventario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

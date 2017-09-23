@@ -49,12 +49,12 @@ public class StoreContract {
         /**
          * Items available to add to inventory and purchase
          */
-        public static final int COLUMN_ITEM_HEADPHONES = 0;
-        public static final int COLUMN_ITEM_GUITAR_JACKSON = 1;
-        public static final int COLUMN_ITEM_GUITAR_ESP = 2;
-        public static final int COLUMN_ITEM_GUITAR_FENDER = 3;
-        public static final int COLUMN_ITEM_DRUMKIT_MAPEX = 4;
-        public static final int COLUMN_ITEM_DRUMKIT_TAMA = 5;
+        public static final int ITEM_HEADPHONES = 0;
+        public static final int ITEM_GUITAR_JACKSON = 1;
+        public static final int ITEM_GUITAR_ESP = 2;
+        public static final int ITEM_GUITAR_FENDER = 3;
+        public static final int ITEM_DRUMKIT_MAPEX = 4;
+        public static final int ITEM_DRUMKIT_TAMA = 5;
         /**
          * The Price for the items TYPE:INTEGER
          */
@@ -109,12 +109,12 @@ public class StoreContract {
          */
 
         public static boolean isValidItem(int items) {
-            if (items == COLUMN_ITEM_HEADPHONES ||
-                    items == COLUMN_ITEM_GUITAR_ESP ||
-                    items == COLUMN_ITEM_GUITAR_FENDER ||
-                    items == COLUMN_ITEM_GUITAR_JACKSON ||
-                    items == COLUMN_ITEM_DRUMKIT_MAPEX ||
-                    items == COLUMN_ITEM_DRUMKIT_TAMA) {
+            if (items == ITEM_HEADPHONES ||
+                    items == ITEM_GUITAR_ESP ||
+                    items == ITEM_GUITAR_FENDER ||
+                    items == ITEM_GUITAR_JACKSON ||
+                    items == ITEM_DRUMKIT_MAPEX ||
+                    items == ITEM_DRUMKIT_TAMA) {
                 return true;
             }
             return false;
