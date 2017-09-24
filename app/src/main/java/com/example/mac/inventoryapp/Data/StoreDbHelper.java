@@ -34,7 +34,7 @@ public class StoreDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create a String that contains the SQL statement to create the pets table
-        String SQL_CREATE_INVENTORY_TABLE = "CREATE TABLE" +  StoreEntry.TABLE_NAME + " ("
+        String SQL_CREATE_INVENTORY_TABLE = "CREATE TABLE" + " "+StoreEntry.TABLE_NAME + " ("
                 + StoreEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + StoreEntry.COLUMN_PRODUCT_IMAGES + " TEXT NOT NULL, "
                 + StoreEntry.COLUMN_CUST_NAME + " TEXT NOT NULL, "
@@ -43,7 +43,9 @@ public class StoreDbHelper extends SQLiteOpenHelper {
                 + StoreEntry.COLUMN_AVAILABLE_UNITS + " INTEGER NOT NULL DEFAULT 0, "
                 + StoreEntry.COLUMN_SHIP_TO_ADDRESS + " TEXT NOT NULL);";
 
-        Log.d(“StoreDbHelper.class”, SQL_CREATE_INVENTORY_TABLE);
+
+
+    Log.d( "StoreDbHelper", "++++++++++++++++++++ " + SQL_CREATE_INVENTORY_TABLE);
         /**
          * Execute the SQL Statement.
          */
