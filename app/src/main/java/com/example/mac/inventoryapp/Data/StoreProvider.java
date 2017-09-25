@@ -97,6 +97,7 @@ public class StoreProvider extends ContentProvider {
     }
 
     private Uri insertInv(Uri uri, ContentValues contentValues) {
+
         Integer productName = contentValues.getAsInteger(StoreEntry.COLUMN_INV_ITEM);
         if (productName == null || !StoreEntry.isValidItem(productName)) {
             throw new IllegalArgumentException("Product requires a name");
