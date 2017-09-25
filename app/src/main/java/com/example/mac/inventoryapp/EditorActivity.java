@@ -281,15 +281,19 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                     }else if(selection.equals("Guitar Esp")){
                         mProduct= StoreContract.StoreEntry.ITEM_GUITAR_ESP;
                         mProdImages.setImageResource(R.drawable.espguitar);
+                        mPriceText.setText("$2000");
                     }else if (selection.equals("Guitar Fender")){
                         mProduct= StoreContract.StoreEntry.ITEM_GUITAR_FENDER;
                         mProdImages.setImageResource(R.drawable.fendergui);
+                        mPriceText.setText("$1500");
                     }else if (selection.equals("Mapex Drums")){
                         mProduct= StoreContract.StoreEntry.ITEM_DRUMKIT_MAPEX;
                         mProdImages.setImageResource(R.drawable.mapexdrum);
+                        mPriceText.setText("$3000");
                     }else if (selection.equals("Tama Drums")){
                         mProduct= StoreContract.StoreEntry.ITEM_DRUMKIT_TAMA;
                         mProdImages.setImageResource(R.drawable.tamadrum);
+                        mPriceText.setText("$6000");
                     }else{
                         mProduct=0;
                     }

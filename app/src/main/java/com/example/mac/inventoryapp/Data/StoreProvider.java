@@ -102,7 +102,7 @@ public class StoreProvider extends ContentProvider {
         if (productName == null ) {
             throw new IllegalArgumentException("Product requires a name");
         }
-        String productPrice = contentValues.getAsString(StoreEntry.COLUMN_PRICE);
+        Integer productPrice = contentValues.getAsInteger(StoreEntry.COLUMN_PRICE);
         if (productPrice != null || productPrice <= 0) {
             throw new IllegalArgumentException("Product requires a Price and cant be less or equal to 0");
         }
