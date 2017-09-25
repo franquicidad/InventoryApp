@@ -273,27 +273,27 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                     if(selection.equals("Headphones")) {
                         mProduct = StoreContract.StoreEntry.ITEM_HEADPHONES;
                         mProdImages.setImageResource(R.drawable.audifonos);
-                        mPriceText.setText("$10.00");
+                        mPriceText.setText("10");
                     }else if(selection.equals("Guitar jackson")){
                         mProduct= StoreContract.StoreEntry.ITEM_GUITAR_JACKSON;
                         mProdImages.setImageResource(R.drawable.jacksonguitar);
-                        mPriceText.setText("$1000");
+                        mPriceText.setText("1000");
                     }else if(selection.equals("Guitar Esp")){
                         mProduct= StoreContract.StoreEntry.ITEM_GUITAR_ESP;
                         mProdImages.setImageResource(R.drawable.espguitar);
-                        mPriceText.setText("$2000");
+                        mPriceText.setText("2000");
                     }else if (selection.equals("Guitar Fender")){
                         mProduct= StoreContract.StoreEntry.ITEM_GUITAR_FENDER;
                         mProdImages.setImageResource(R.drawable.fendergui);
-                        mPriceText.setText("$1500");
+                        mPriceText.setText("1500");
                     }else if (selection.equals("Mapex Drums")){
                         mProduct= StoreContract.StoreEntry.ITEM_DRUMKIT_MAPEX;
                         mProdImages.setImageResource(R.drawable.mapexdrum);
-                        mPriceText.setText("$3000");
+                        mPriceText.setText("3000");
                     }else if (selection.equals("Tama Drums")){
                         mProduct= StoreContract.StoreEntry.ITEM_DRUMKIT_TAMA;
                         mProdImages.setImageResource(R.drawable.tamadrum);
-                        mPriceText.setText("$6000");
+                        mPriceText.setText("6000");
                     }else{
                         mProduct=0;
                     }
@@ -310,7 +310,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     private void saveProduct(){
         String custName= mNameEdit.getText().toString().trim();
-        String Price=mPriceText.getText().toString().trim();
+        int Price= Integer.parseInt(mPriceText.getText().toString().trim());
         String Quantity=mQuantity.getText().toString().trim();
         String product= mProdSpinner.getSelectedItem().toString();
         String address=mShipto.getText().toString().trim();
@@ -323,7 +323,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         if(mCurrentInvUri == null &&
                 TextUtils.isEmpty(custName) &&
-                TextUtils.isEmpty(Price) &&
                 TextUtils.isEmpty(Quantity)&&
                 TextUtils.isEmpty(product)&&
                 TextUtils.isEmpty(address)){
