@@ -98,12 +98,12 @@ public class StoreProvider extends ContentProvider {
 
     private Uri insertInv(Uri uri, ContentValues contentValues) {
 
-        Integer productName = contentValues.getAsInteger(StoreEntry.COLUMN_INV_ITEM);
-        if (productName == null || !StoreEntry.isValidItem(productName)) {
+        String productName = contentValues.getAsString(StoreEntry.COLUMN_INV_ITEM);
+        if (productName == null ) {
             throw new IllegalArgumentException("Product requires a name");
         }
-        Integer productPrice = contentValues.getAsInteger(StoreEntry.COLUMN_PRICE);
-        if (productPrice != null || productPrice < 0) {
+        String productPrice = contentValues.getAsString(StoreEntry.COLUMN_PRICE);
+        if (productPrice != null || productPrice <= 0) {
             throw new IllegalArgumentException("Product requires a Price and cant be less or equal to 0");
         }
         Integer productQuantity = contentValues.getAsInteger(StoreEntry.COLUMN_AVAILABLE_UNITS);

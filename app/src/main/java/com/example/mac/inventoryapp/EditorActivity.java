@@ -14,6 +14,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -307,8 +308,14 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String custName= mNameEdit.getText().toString().trim();
         String Price=mPriceText.getText().toString().trim();
         String Quantity=mQuantity.getText().toString().trim();
-        String product= mProdSpinner.getOnItemSelectedListener().toString();
+        String product= mProdSpinner.getSelectedItem().toString();
         String address=mShipto.getText().toString().trim();
+
+        Log.v("my_tag","custName is:"+custName);
+        Log.v("my_tag","custName is:"+Price);
+        Log.v("my_tag","custName is:"+Quantity);
+        Log.v("my_tag","custName is:"+product);
+        Log.v("my_tag","custName is:"+address);
 
         if(mCurrentInvUri == null &&
                 TextUtils.isEmpty(custName) &&
