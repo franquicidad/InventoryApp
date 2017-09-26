@@ -16,18 +16,20 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"/>
         <LinearLayout
-            android:layout_width="180dp"
+            android:layout_width="145dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/ListProductName"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:textStyle="bold"
                 android:layout_weight="1"/>
             <TextView
                 android:id="@+id/ListPrice"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:textStyle="italic"
                 android:layout_weight="1"/>
             <TextView
                 android:id="@+id/ListQuantity"
