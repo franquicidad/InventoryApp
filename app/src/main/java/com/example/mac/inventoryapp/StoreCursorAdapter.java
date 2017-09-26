@@ -2,6 +2,7 @@ package com.example.mac.inventoryapp;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class StoreCursorAdapter extends CursorAdapter {
         int quantityColumnIndex=cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS);
 
         String imageProduct2 =cursor.getString(imageColumnIndex);
+        Uri imageUri =Uri.parse(imageProduct2);
         String productName=cursor.getString(productColumnIndex);
         String priceProduct=cursor.getString(priceColumnIndex);
         String quantityAvailable=cursor.getString(quantityColumnIndex);
@@ -50,6 +52,8 @@ public class StoreCursorAdapter extends CursorAdapter {
         imageProduct.setImageResource(Integer.parseInt(imageProduct2));
         product.setText(productName);
         price.setText(priceProduct);
+        imageProduct.setImageURI(imageUri);
+
         quantity.setText(quantityAvailable);
     }
 }
