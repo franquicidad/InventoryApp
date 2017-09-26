@@ -311,6 +311,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private void saveProduct(){
         String custName= mNameEdit.getText().toString().trim();
         int Price= Integer.parseInt(mPriceText.getText().toString().trim());
+        String Images= mProdImages.getDrawable().toString();
         String Quantity=mQuantity.getText().toString().trim();
         String product= mProdSpinner.getSelectedItem().toString();
         String address=mShipto.getText().toString().trim();
@@ -335,6 +336,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         values.put(StoreContract.StoreEntry.COLUMN_CUST_NAME,custName);
         values.put(StoreContract.StoreEntry.COLUMN_INV_ITEM,product);
+        values.put(StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES,Images);
         values.put(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS,Quantity);
         values.put(StoreContract.StoreEntry.COLUMN_PRICE,Price);
         values.put(StoreContract.StoreEntry.COLUMN_SHIP_TO_ADDRESS,address);
