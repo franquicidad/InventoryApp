@@ -49,7 +49,6 @@ public class StoreCursorAdapter extends CursorAdapter {
         String priceProduct=cursor.getString(priceColumnIndex);
         String quantityAvailable=cursor.getString(quantityColumnIndex);
 
-        imageProduct.setImageResource(Integer.parseInt(imageProduct2));
         product.setText(productName);
         price.setText(priceProduct);
         imageProduct.setImageURI(imageUri);
