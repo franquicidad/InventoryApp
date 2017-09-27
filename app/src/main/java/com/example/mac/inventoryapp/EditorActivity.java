@@ -75,6 +75,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     public Uri imageUri;
 
+    private String stringCurrentInvUri;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         Intent catalogIntent = getIntent();
         Uri InventoryCurrentStoreUri = catalogIntent.getData();
+
+        mCurrentInvUri=InventoryCurrentStoreUri;
+
+
+
+
 
         /**if the intent DOES NOT contain an URI, then we are creating a new product*/
         if (InventoryCurrentStoreUri == null) {
@@ -136,6 +145,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("*/*");
                 intent.setData(Uri.parse("mailto:"));
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Order for " + mProdSpinner);
 
@@ -352,7 +362,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         Log.v("my_tag","custName is:"+product);
         Log.v("my_tag","custName is:"+address);
 
-        if(mCurrentInvUri == null &&
+        if( mCurrentInvUri== null &&
                 TextUtils.isEmpty(custName) &&
                 TextUtils.isEmpty(Quantity)&&
                 TextUtils.isEmpty(product)&&
@@ -370,6 +380,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         values.put(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS,Quantity);
         values.put(StoreContract.StoreEntry.COLUMN_PRICE,Price);
         values.put(StoreContract.StoreEntry.COLUMN_SHIP_TO_ADDRESS,address);
+
+        Log.v("my_tag", "mCurrentInvUri is:---------------------------------------- "+mCurrentInvUri.toString());
+
 
         // Determine if this is a new or existing product by checking if mCurrentStoreUri is null or not
         if (mCurrentInvUri == null) {
