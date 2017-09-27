@@ -47,6 +47,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private TextView mQuantity;
     private Button mQuantityPlus;
     private Button mQuantityMinus;
+    private Button ordertoProvider;
     /**
      * Identifier for the pet data loader
      */
@@ -126,8 +127,26 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mProdImages.setOnTouchListener(mTouchlistener);
         mPriceText.setOnTouchListener(mTouchlistener);
         mQuantity.setOnTouchListener(mTouchlistener);
-
         setupSpinner();
+
+        ordertoProvider=(Button)findViewById(R.id.orderInventory);
+        ordertoProvider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Order for " + mProdSpinner);
+                intent.putExtra(Intent.EXTRA_TEXT,"Please send to my store"+mQuantity+"of"+mProdSpinner+".\n Yours" +
+                                " truly.\n Felipe Franco \n Store General Manager."
+                        );
+
+                try {
+                    startActivity(Intent.createChooser(intent, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override

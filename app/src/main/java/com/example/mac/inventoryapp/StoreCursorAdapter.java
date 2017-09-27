@@ -1,16 +1,21 @@
 package com.example.mac.inventoryapp;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mac.inventoryapp.Data.StoreContract;
+import com.example.mac.inventoryapp.Data.StoreDbHelper;
 
 /**
  * Created by mac on 21/09/17.
@@ -31,7 +36,7 @@ public class StoreCursorAdapter extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, Cursor cursor) {
 
         imageProduct=(ImageView)view.findViewById(R.id.imageProductType);
         product=(TextView)view.findViewById(R.id.ListProductName);
@@ -42,6 +47,10 @@ public class StoreCursorAdapter extends CursorAdapter {
         int productColumnIndex=cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_INV_ITEM);
         int priceColumnIndex=cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_PRICE);
         int quantityColumnIndex=cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS);
+        int rowIndex = cursor.getColumnIndex(StoreContract.StoreEntry._ID);
+
+        final int rowId = cursor.getInt(rowIndex);
+
 
         String imageProduct2 =cursor.getString(imageColumnIndex);
         Uri imageUri =Uri.parse(imageProduct2);
@@ -52,7 +61,36 @@ public class StoreCursorAdapter extends CursorAdapter {
         product.setText(productName);
         price.setText(priceProduct);
         imageProduct.setImageURI(imageUri);
-
         quantity.setText(quantityAvailable);
+
+        Button saleButton=(Button)view.findViewById(R.id.purchaseListView);
+
+        saleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StoreDbHelper dbHelper = new StoreDbHelper(context);
+                SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+                int items = Integer.parseInt(quantity.getText().toString());
+                if (items > 0) {
+                    int mQuantitySold = items - 1;
+
+                    ContentValues values = new ContentValues();
+
+                    values.put(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS, mQuantitySold);
+
+                    String selection = StoreContract.StoreEntry._ID + "=?";
+
+                    String[] selectionArgs = new String[]{String.valueOf(rowId)};
+                    int rowsAffected = database.update(StoreContract.StoreEntry.TABLE_NAME, values, selection, selectionArgs);
+                    if (rowsAffected != -1) {
+                        quantity.setText(Integer.toString(mQuantitySold));
+                    }
+                } else
+                    Toast.makeText(context, "No Stock Left ", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
     }
 }
