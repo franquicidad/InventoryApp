@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -136,9 +138,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setData(Uri.parse("mailto:"));
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Order for " + mProdSpinner);
-                intent.putExtra(Intent.EXTRA_TEXT,"Please send to my store"+mQuantity+"of"+mProdSpinner+".\n Yours" +
-                                " truly.\n Felipe Franco \n Store General Manager."
-                        );
+
 
                 try {
                     startActivity(Intent.createChooser(intent, "Send mail..."));
@@ -458,11 +458,70 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
+
+        String[] projection={
+                StoreContract.StoreEntry._ID,
+                StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES,
+                StoreContract.StoreEntry.COLUMN_CUST_NAME,
+                StoreContract.StoreEntry.COLUMN_INV_ITEM,
+                StoreContract.StoreEntry.COLUMN_PRICE,
+                StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS,
+                StoreContract.StoreEntry.COLUMN_SHIP_TO_ADDRESS
+        };
+        return new CursorLoader(this,
+                StoreContract.StoreEntry.CONTENT_URI,
+                projection,
+                null,
+                null,
+                null);
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        // Bail early if the cursor is null or there is less than 1 row in the cursor
+        if (cursor == null || cursor.getCount() < 1) {
+            return;
+        }
+
+        if(cursor.moveToFirst()){
+            int name=cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_CUST_NAME);
+            int product=cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_INV_ITEM);
+            int price=cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_PRICE);
+            int quantity=cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS);
+            int address=cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_SHIP_TO_ADDRESS);
+
+            String custName= cursor.getString(name);
+            int prodName=cursor.getInt(product);
+            String PriceText=cursor.getString(price);
+            int quanText=cursor.getInt(quantity);
+            String shipto=cursor.getString(address);
+
+            mNameEdit.setText(custName);
+            mProdSpinner.setSelection(prodName);
+            mPriceText.setText(PriceText);
+            mQuantity.setText(Integer.toString(quanText));
+            mShipto.setText(shipto);
+
+            switch(prodName){
+                case StoreContract.StoreEntry.ITEM_GUITAR_JACKSON:
+                    mProdSpinner.setSelection(1);
+                    break;
+                case StoreContract.StoreEntry.ITEM_GUITAR_ESP:
+                    mProdSpinner.setSelection(2);
+                    break;
+                case StoreContract.StoreEntry.ITEM_GUITAR_FENDER:
+                    mProdSpinner.setSelection(3);
+                    break;
+                case StoreContract.StoreEntry.ITEM_DRUMKIT_MAPEX:
+                    mProdSpinner.setSelection(4);
+                    break;
+                case StoreContract.StoreEntry.ITEM_DRUMKIT_TAMA:
+                    mProdSpinner.setSelection(5);
+                    default:
+                        mProdSpinner.setTag(0);
+                        break;
+            }
+        }
 
     }
 

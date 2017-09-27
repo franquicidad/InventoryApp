@@ -43,7 +43,7 @@ public class StoreCursorAdapter extends CursorAdapter {
         price=(TextView)view.findViewById(R.id.ListPrice);
         quantity=(TextView)view.findViewById(R.id.ListQuantity);
 
-        int imageColumnIndex=cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES);
+        int imageColumnIndex=cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES);
         int productColumnIndex=cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_INV_ITEM);
         int priceColumnIndex=cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_PRICE);
         int quantityColumnIndex=cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS);

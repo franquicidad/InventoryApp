@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Customers name"
-                android:textSize="11sp"
+                android:textSize="20sp"
                 android:textStyle="italic"/>
         </LinearLayout>
 
@@ -163,7 +163,8 @@
                 android:id="@+id/EditAddress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="11sp"/>
+                android:hint="Address for delivery"
+                android:textSize="20sp"/>
         </LinearLayout>
     </LinearLayout>
 
