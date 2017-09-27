@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.example.mac.inventoryapp.Data.StoreContract;
+import com.facebook.stetho.Stetho;
 
 /**
  * Created by mac on 18/09/17.
@@ -40,6 +41,7 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_inventory);
 
         FloatingActionButton fab=(FloatingActionButton)findViewById(R.id.AgregarInventario);
@@ -63,15 +65,13 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(InventoryActivity.this,EditorActivity.class);
-                /**This returns the Uri with the Id of the Pet Selected on the listView.
-                 *
-                 */
-                InventoryCurrentStoreUri= ContentUris.withAppendedId(StoreContract.StoreEntry.CONTENT_URI,id);
-                intent.setData(InventoryCurrentStoreUri);
-                startActivity(intent);
+                Intent catalogIntent=new Intent(InventoryActivity.this,EditorActivity.class);
+                InventoryCurrentStoreUri=ContentUris.withAppendedId(StoreContract.StoreEntry.CONTENT_URI,id);
+                catalogIntent.setData(InventoryCurrentStoreUri);
+                startActivity(catalogIntent);
             }
         });
+
         getSupportLoaderManager().initLoader(STORE_LOADER,null,this);
     }
 

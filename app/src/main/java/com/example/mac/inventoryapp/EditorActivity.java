@@ -58,6 +58,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     private Uri mCurrentInvUri;
 
+
     private boolean mInvHasChanged = false;
     /**
      * If the user doesnt select nothing then we cant have a null product
@@ -69,17 +70,19 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     private boolean mStoreHasChanged = false;
 
+    public Uri imageUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_add_layout);
 
-        Intent intent = getIntent();
-        mCurrentInvUri = intent.getData();
+        Intent catalogIntent = getIntent();
+        Uri InventoryCurrentStoreUri = catalogIntent.getData();
 
         /**if the intent DOES NOT contain an URI, then we are creating a new product*/
-        if (mCurrentInvUri == null) {
+        if (InventoryCurrentStoreUri == null) {
             /**As this is a new product then change the title bar to display create product*/
             setTitle("Create a Product");
             // Invalidate the options menu, so the "Delete" menu option can be hidden.
@@ -269,28 +272,36 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selection=(String)parent.getItemAtPosition(position);
+
                 if(!TextUtils.isEmpty(selection)){
                     if(selection.equals("Headphones")) {
+                        mProdImages.setTag("audifonos.png");
                         mProduct = StoreContract.StoreEntry.ITEM_HEADPHONES;
                         mProdImages.setImageResource(R.drawable.audifonos);
                         mPriceText.setText("10");
+
                     }else if(selection.equals("Guitar jackson")){
+                        mProdImages.setTag("jacksonguitar.png");
                         mProduct= StoreContract.StoreEntry.ITEM_GUITAR_JACKSON;
                         mProdImages.setImageResource(R.drawable.jacksonguitar);
                         mPriceText.setText("1000");
                     }else if(selection.equals("Guitar Esp")){
+                        mProdImages.setTag("espguitar.png");
                         mProduct= StoreContract.StoreEntry.ITEM_GUITAR_ESP;
                         mProdImages.setImageResource(R.drawable.espguitar);
                         mPriceText.setText("2000");
                     }else if (selection.equals("Guitar Fender")){
+                        mProdImages.setTag("fendergui.png");
                         mProduct= StoreContract.StoreEntry.ITEM_GUITAR_FENDER;
                         mProdImages.setImageResource(R.drawable.fendergui);
                         mPriceText.setText("1500");
                     }else if (selection.equals("Mapex Drums")){
+                        mProdImages.setTag("mapexdrum.png");
                         mProduct= StoreContract.StoreEntry.ITEM_DRUMKIT_MAPEX;
                         mProdImages.setImageResource(R.drawable.mapexdrum);
                         mPriceText.setText("3000");
                     }else if (selection.equals("Tama Drums")){
+                        mProdImages.setTag("tamadrum.png");
                         mProduct= StoreContract.StoreEntry.ITEM_DRUMKIT_TAMA;
                         mProdImages.setImageResource(R.drawable.tamadrum);
                         mPriceText.setText("6000");
@@ -311,7 +322,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private void saveProduct(){
         String custName= mNameEdit.getText().toString().trim();
         int Price= Integer.parseInt(mPriceText.getText().toString().trim());
-        String Images= mProdImages.getDrawable().toString();
+        String StringImageUri=String.valueOf(Uri.parse("android.resource://com.example.mac.inventoryapp/drawable/"+mProdImages.getTag()));
         String Quantity=mQuantity.getText().toString().trim();
         String product= mProdSpinner.getSelectedItem().toString();
         String address=mShipto.getText().toString().trim();
@@ -336,11 +347,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         values.put(StoreContract.StoreEntry.COLUMN_CUST_NAME,custName);
         values.put(StoreContract.StoreEntry.COLUMN_INV_ITEM,product);
-        values.put(StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES,Images);
+        values.put(StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES,StringImageUri);
         values.put(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS,Quantity);
         values.put(StoreContract.StoreEntry.COLUMN_PRICE,Price);
         values.put(StoreContract.StoreEntry.COLUMN_SHIP_TO_ADDRESS,address);
-
 
         // Determine if this is a new or existing product by checking if mCurrentStoreUri is null or not
         if (mCurrentInvUri == null) {

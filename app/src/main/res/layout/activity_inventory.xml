@@ -28,8 +28,8 @@
             android:id="@+id/desImagenVacio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Null!!"
-            android:textSize="40sp"
+            android:text="To add a new product \n click on the inventory button above"
+            android:textSize="20sp"
             android:layout_marginTop="14dp"
             android:layout_below="@+id/vacio"
             android:layout_centerHorizontal="true" />

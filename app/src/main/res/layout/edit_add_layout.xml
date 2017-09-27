@@ -11,6 +11,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:tag="edit_layout_imageview"
             android:id="@+id/imageProductType"
             android:layout_width="150dp"
             android:layout_height="165dp"
