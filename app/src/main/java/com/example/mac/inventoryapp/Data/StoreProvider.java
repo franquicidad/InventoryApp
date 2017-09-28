@@ -169,27 +169,37 @@ public class StoreProvider extends ContentProvider {
     }
 
     private int updateInv(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
-        Integer productName = contentValues.getAsInteger(StoreEntry.COLUMN_INV_ITEM);
-        if (productName == null || !StoreEntry.isValidItem(productName)) {
-            throw new IllegalArgumentException("Product requires a name");
+        if(contentValues.containsKey(StoreEntry.COLUMN_INV_ITEM)) {
+            String productName = contentValues.getAsString(StoreEntry.COLUMN_INV_ITEM);
+            if (productName == null) {
+                throw new IllegalArgumentException("Product requires a name");
+            }
         }
-        Integer productPrice = contentValues.getAsInteger(StoreEntry.COLUMN_PRICE);
-        if (productPrice != null || productPrice < 0) {
-            throw new IllegalArgumentException("Product requires a Price and cant be less or equal to 0");
+        if(contentValues.containsKey(StoreEntry.COLUMN_PRICE)) {
+            Integer productPrice = contentValues.getAsInteger(StoreEntry.COLUMN_PRICE);
+            if (productPrice != null) {
+                throw new IllegalArgumentException("Product requires a Price and cant be less or equal to 0");
+            }
         }
-        Integer productQuantity = contentValues.getAsInteger(StoreEntry.COLUMN_AVAILABLE_UNITS);
-        if (productQuantity < 0) {
-            throw new IllegalArgumentException("Product requires Quantity and cant be less than 0");
+        if(contentValues.containsKey(StoreEntry.COLUMN_AVAILABLE_UNITS)) {
+            Integer productQuantity = contentValues.getAsInteger(StoreEntry.COLUMN_AVAILABLE_UNITS);
+            if (productQuantity < 0) {
+                throw new IllegalArgumentException("Product requires Quantity and cant be less than 0");
+            }
         }
         if (contentValues.size() == 0) {
             return 0;
         }
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
+        int rowsUpdated=database.update(StoreEntry.TABLE_NAME,contentValues,selection,selectionArgs);
+
+        if(rowsUpdated !=0){
+            getContext().getContentResolver().notifyChange(uri,null);
+        }
+
         // Returns the number of database rows affected by the update statement
-        return database.update(StoreEntry.TABLE_NAME, contentValues, selection, selectionArgs);
-
-
+        return rowsUpdated;
     }
 }
 
