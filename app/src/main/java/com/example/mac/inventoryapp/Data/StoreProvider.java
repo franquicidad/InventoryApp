@@ -19,14 +19,10 @@ import com.example.mac.inventoryapp.Data.StoreContract.StoreEntry;
 
 public class StoreProvider extends ContentProvider {
 
-    private StoreDbHelper mDbHelper;
-
+    public static final String LOG_TAG = StoreProvider.class.getSimpleName();
     private static final int INVENTORY = 100;
 
     private static final int INVENTORY_ID = 101;
-
-    public static final String LOG_TAG = StoreProvider.class.getSimpleName();
-
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
@@ -34,6 +30,7 @@ public class StoreProvider extends ContentProvider {
         sUriMatcher.addURI(StoreEntry.CONTENT_AUTHORITY, StoreEntry.PATH_INVENTORY + "/#", INVENTORY_ID);
     }
 
+    private StoreDbHelper mDbHelper;
 
     @Override
     public boolean onCreate() {
@@ -66,7 +63,7 @@ public class StoreProvider extends ContentProvider {
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
         }
 
-        cursor.setNotificationUri(getContext().getContentResolver(),uri);
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
         return cursor;
     }
@@ -74,8 +71,8 @@ public class StoreProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(Uri uri) {
-        final int match=sUriMatcher.match(uri);
-        switch (match){
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
             case INVENTORY:
                 return StoreEntry.CONTENT_LIST_TYPE;
             case INVENTORY_ID:
@@ -101,7 +98,7 @@ public class StoreProvider extends ContentProvider {
     private Uri insertInv(Uri uri, ContentValues contentValues) {
 
         String productName = contentValues.getAsString(StoreEntry.COLUMN_INV_ITEM);
-        if (productName == null ) {
+        if (productName == null) {
             throw new IllegalArgumentException("Product requires a name");
         }
         Integer productPrice = contentValues.getAsInteger(StoreEntry.COLUMN_PRICE);
@@ -129,30 +126,31 @@ public class StoreProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri,String selection,String[] selectionArgs) {
-        SQLiteDatabase database=mDbHelper.getWritableDatabase();
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
         int rowsDeleted;
 
-        final int match=sUriMatcher.match(uri);
-        switch (match){
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
             case INVENTORY:
-                rowsDeleted=database.delete(StoreEntry.TABLE_NAME,selection,selectionArgs);
+                rowsDeleted = database.delete(StoreEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             case INVENTORY_ID:
                 selection = StoreEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
 
-                rowsDeleted= database.delete(StoreEntry.TABLE_NAME,selection,selectionArgs);
+                rowsDeleted = database.delete(StoreEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
         }
-        if(rowsDeleted !=0) {
+        if (rowsDeleted != 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
         return rowsDeleted;
 
     }
+
     @Override
     public int update(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
         final int match = sUriMatcher.match(uri);
@@ -169,19 +167,19 @@ public class StoreProvider extends ContentProvider {
     }
 
     private int updateInv(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
-        if(contentValues.containsKey(StoreEntry.COLUMN_INV_ITEM)) {
+        if (contentValues.containsKey(StoreEntry.COLUMN_INV_ITEM)) {
             String productName = contentValues.getAsString(StoreEntry.COLUMN_INV_ITEM);
             if (productName == null) {
                 throw new IllegalArgumentException("Product requires a name");
             }
         }
-        if(contentValues.containsKey(StoreEntry.COLUMN_PRICE)) {
+        if (contentValues.containsKey(StoreEntry.COLUMN_PRICE)) {
             Integer productPrice = contentValues.getAsInteger(StoreEntry.COLUMN_PRICE);
-            if (productPrice <=0 || productPrice == 0 || productPrice == null) {
+            if (productPrice <= 0 || productPrice == 0 || productPrice == null) {
                 throw new IllegalArgumentException("Product requires a Price and cant be less or equal to 0");
             }
         }
-        if(contentValues.containsKey(StoreEntry.COLUMN_AVAILABLE_UNITS)) {
+        if (contentValues.containsKey(StoreEntry.COLUMN_AVAILABLE_UNITS)) {
             Integer productQuantity = contentValues.getAsInteger(StoreEntry.COLUMN_AVAILABLE_UNITS);
             if (productQuantity < 0) {
                 throw new IllegalArgumentException("Product requires Quantity and cant be less than 0");
@@ -192,10 +190,10 @@ public class StoreProvider extends ContentProvider {
         }
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
-        int rowsUpdated=database.update(StoreEntry.TABLE_NAME,contentValues,selection,selectionArgs);
+        int rowsUpdated = database.update(StoreEntry.TABLE_NAME, contentValues, selection, selectionArgs);
 
-        if(rowsUpdated !=0){
-            getContext().getContentResolver().notifyChange(uri,null);
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
         }
 
         // Returns the number of database rows affected by the update statement

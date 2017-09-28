@@ -40,6 +40,12 @@ import com.example.mac.inventoryapp.Data.StoreContract;
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     /**
+     * Identifier for the pet data loader
+     */
+    private static final int EDITOR_LOADER = 0;
+    public Uri imageUri;
+    int quantityCountVariable = 0;
+    /**
      * Global variables for views on the Layout
      */
     private EditText mNameEdit, mShipto;
@@ -51,33 +57,25 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private Button mQuantityMinus;
     private Button ordertoProvider;
     /**
-     * Identifier for the pet data loader
-     */
-    private static final int EDITOR_LOADER = 0;
-
-    /**
      * Content URI for the existing pet (null if it's a new pet)
      */
 
     private Uri mCurrentInvUri;
-
-
     private boolean mInvHasChanged = false;
     /**
      * If the user doesnt select nothing then we cant have a null product
      * so by default the headphone will be selected.
      */
     private int mProduct = 0;
-
-    int quantityCountVariable = 0;
-
     private boolean mStoreHasChanged = false;
-
-    public Uri imageUri;
-
     private String stringCurrentInvUri;
-
-
+    private View.OnTouchListener mTouchlistener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            mInvHasChanged = true;
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +85,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         Intent catalogIntent = getIntent();
         Uri InventoryCurrentStoreUri = catalogIntent.getData();
 
-        mCurrentInvUri=InventoryCurrentStoreUri;
-
-
-
+        mCurrentInvUri = InventoryCurrentStoreUri;
 
 
         /**if the intent DOES NOT contain an URI, then we are creating a new product*/
@@ -140,14 +135,16 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mQuantity.setOnTouchListener(mTouchlistener);
         setupSpinner();
 
-        ordertoProvider=(Button)findViewById(R.id.orderInventory);
+        ordertoProvider = (Button) findViewById(R.id.orderInventory);
         ordertoProvider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("*/*");
+                Intent intent = new Intent(android.content.Intent.ACTION_SENDTO);
+                intent.setType("text/plain");
                 intent.setData(Uri.parse("mailto:"));
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Order for " + mProdSpinner);
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "New Order");
+                String message = "We need a new order for " + mNameEdit.getText().toString().trim() + "of" + mProdSpinner.getSelectedItem().toString().trim();
+                intent.putExtra(android.content.Intent.EXTRA_TEXT, message);
 
 
                 try {
@@ -193,31 +190,36 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         return super.onOptionsItemSelected(item);
     }
 
-    /** Method to increment the units available*/
+    /**
+     * Method to increment the units available
+     */
 
-    public void increment(View view){
-        if(quantityCountVariable==50){
-            Toast.makeText(this, "You cannot order more than 50 units",Toast.LENGTH_LONG).show();
+    public void increment(View view) {
+        if (quantityCountVariable == 50) {
+            Toast.makeText(this, "You cannot order more than 50 units", Toast.LENGTH_LONG).show();
             return;
         }
         quantityCountVariable++;
 
-        mQuantity.setText(" "+quantityCountVariable);
+        mQuantity.setText(" " + quantityCountVariable);
     }
-    /** Method to reduce the inventory units available*/
 
-    public void decrement(View view){
-        if(quantityCountVariable<=0){
-            Toast.makeText(this, "You cant less than 0 of a product!",Toast.LENGTH_LONG).show();
+    /**
+     * Method to reduce the inventory units available
+     */
+
+    public void decrement(View view) {
+        if (quantityCountVariable <= 0) {
+            Toast.makeText(this, "You cant less than 0 of a product!", Toast.LENGTH_LONG).show();
             return;
         }
         quantityCountVariable--;
-        mQuantity.setText(""+quantityCountVariable);
+        mQuantity.setText(quantityCountVariable);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_editor,menu);
+        getMenuInflater().inflate(R.menu.menu_editor, menu);
         return true;
     }
 
@@ -227,18 +229,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         // If this is a new pet, hide the "Delete" menu item.
         if (mCurrentInvUri == null) {
-            MenuItem menuItem = menu.findItem(R.id.action_save);
-            menuItem.setVisible(true);
-        }return true;
-    }
-
-    private View.OnTouchListener mTouchlistener=new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            mInvHasChanged=true;
-            return false;
+            MenuItem menuItem = menu.findItem(R.id.action_delete);
+            menuItem.setVisible(false);
         }
-    };
+        return true;
+    }
 
     private void showUnsavedChangesDialog(DialogInterface.OnClickListener discardButtonClickListener) {
         // Create an AlertDialog.Builder and set the message, and click listeners
@@ -266,31 +261,31 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public void onBackPressed() {
         // If the pet hasn't changed, continue with handling back button press.
-        if(!mInvHasChanged){
-        super.onBackPressed();
-        return;
+        if (!mInvHasChanged) {
+            super.onBackPressed();
+            return;
+        }
+
+        DialogInterface.OnClickListener discardButtonClickListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // User clicked "Discard" button, close the current activity.
+                        finish();
+                    }
+                };
+
+        // Show dialog that there are unsaved changes
+        showUnsavedChangesDialog(discardButtonClickListener);
     }
 
-    DialogInterface.OnClickListener discardButtonClickListener =
-            new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    // User clicked "Discard" button, close the current activity.
-                    finish();
-                }
-            };
-
-    // Show dialog that there are unsaved changes
-    showUnsavedChangesDialog(discardButtonClickListener);
-}
-
-    /** Now setup the spinner that allows the user to choose the product
-     *
+    /**
+     * Now setup the spinner that allows the user to choose the product
      */
 
-    private void setupSpinner(){
-        ArrayAdapter productSpinAdapter= ArrayAdapter.createFromResource(
-                this,R.array.product_options,android.R.layout.simple_spinner_item);
+    private void setupSpinner() {
+        ArrayAdapter productSpinAdapter = ArrayAdapter.createFromResource(
+                this, R.array.product_options, android.R.layout.simple_spinner_item);
 
         productSpinAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 
@@ -300,88 +295,91 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mProdSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selection=(String)parent.getItemAtPosition(position);
+                String selection = (String) parent.getItemAtPosition(position);
 
-                if(!TextUtils.isEmpty(selection)){
-                    if(selection.equals("Headphones")) {
+                if (!TextUtils.isEmpty(selection)) {
+                    if (selection.equals("Headphones")) {
                         mProdImages.setTag("audifonos.png");
                         mProduct = StoreContract.StoreEntry.ITEM_HEADPHONES;
                         mProdImages.setImageResource(R.drawable.audifonos);
                         mPriceText.setText("10");
 
-                    }else if(selection.equals("Guitar jackson")){
+                    } else if (selection.equals("Guitar jackson")) {
                         mProdImages.setTag("jacksonguitar.png");
-                        mProduct= StoreContract.StoreEntry.ITEM_GUITAR_JACKSON;
+                        mProduct = StoreContract.StoreEntry.ITEM_GUITAR_JACKSON;
                         mProdImages.setImageResource(R.drawable.jacksonguitar);
                         mPriceText.setText("1000");
-                    }else if(selection.equals("Guitar Esp")){
+                    } else if (selection.equals("Guitar Esp")) {
                         mProdImages.setTag("espguitar.png");
-                        mProduct= StoreContract.StoreEntry.ITEM_GUITAR_ESP;
+                        mProduct = StoreContract.StoreEntry.ITEM_GUITAR_ESP;
                         mProdImages.setImageResource(R.drawable.espguitar);
                         mPriceText.setText("2000");
-                    }else if (selection.equals("Guitar Fender")){
+                    } else if (selection.equals("Guitar Fender")) {
                         mProdImages.setTag("fendergui.png");
-                        mProduct= StoreContract.StoreEntry.ITEM_GUITAR_FENDER;
+                        mProduct = StoreContract.StoreEntry.ITEM_GUITAR_FENDER;
                         mProdImages.setImageResource(R.drawable.fendergui);
                         mPriceText.setText("1500");
-                    }else if (selection.equals("Mapex Drums")){
+                    } else if (selection.equals("Mapex Drums")) {
                         mProdImages.setTag("mapexdrum.png");
-                        mProduct= StoreContract.StoreEntry.ITEM_DRUMKIT_MAPEX;
+                        mProduct = StoreContract.StoreEntry.ITEM_DRUMKIT_MAPEX;
                         mProdImages.setImageResource(R.drawable.mapexdrum);
                         mPriceText.setText("3000");
-                    }else if (selection.equals("Tama Drums")){
+                    } else if (selection.equals("Tama Drums")) {
                         mProdImages.setTag("tamadrum.png");
-                        mProduct= StoreContract.StoreEntry.ITEM_DRUMKIT_TAMA;
+                        mProduct = StoreContract.StoreEntry.ITEM_DRUMKIT_TAMA;
                         mProdImages.setImageResource(R.drawable.tamadrum);
                         mPriceText.setText("6000");
-                    }else{
-                        mProduct=0;
+                    } else {
+                        mProduct = 0;
                     }
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mProduct=0;
+                mProduct = 0;
             }
         });
 
     }
 
-    private void saveProduct(){
-        String custName= mNameEdit.getText().toString().trim();
-        int Price= Integer.parseInt(mPriceText.getText().toString().trim());
-        String StringImageUri=String.valueOf(Uri.parse("android.resource://com.example.mac.inventoryapp/drawable/"+mProdImages.getTag()));
-        String Quantity=mQuantity.getText().toString().trim();
-        String product= mProdSpinner.getSelectedItem().toString();
-        String address=mShipto.getText().toString().trim();
+    private void saveProduct() {
+        String custName = mNameEdit.getText().toString().trim();
+        int Price = Integer.parseInt(mPriceText.getText().toString().trim());
+        String StringImageUri = String.valueOf(Uri.parse("android.resource://com.example.mac.inventoryapp/drawable/" + mProdImages.getTag()));
+        String Quantity = mQuantity.getText().toString().trim();
+        String product = mProdSpinner.getSelectedItem().toString();
+        String address = mShipto.getText().toString().trim();
 
-        Log.v("my_tag","custName is:"+custName);
-        Log.v("my_tag","price is:"+Price);
-        Log.v("my_tag","quantity is:"+Quantity);
-        Log.v("my_tag","product is:"+product);
-        Log.v("my_tag","address is:"+address);
+        Log.v("my_tag", "custName is:" + custName);
+        Log.v("my_tag", "price is:" + Price);
+        Log.v("my_tag", "quantity is:" + Quantity);
+        Log.v("my_tag", "product is:" + product);
+        Log.v("my_tag", "address is:" + address);
 
-        if( mCurrentInvUri== null &&
+        if (mCurrentInvUri == null &&
                 TextUtils.isEmpty(custName) &&
-                TextUtils.isEmpty(Quantity)&&
-                TextUtils.isEmpty(product)&&
-                TextUtils.isEmpty(address)){
-            Toast.makeText(this,"Please enter all the fields of the product",Toast.LENGTH_LONG).show();
+                TextUtils.isEmpty(Quantity) &&
+                TextUtils.isEmpty(product) &&
+                TextUtils.isEmpty(address)) {
+            Toast.makeText(this, "Please enter all the fields of the product", Toast.LENGTH_LONG).show();
 
             return;
-        };
+        }
+        ;
+        if (mNameEdit == null) {
+            Toast.makeText(this, " Please enter your name", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-        ContentValues values=new ContentValues();
+        ContentValues values = new ContentValues();
 
-        values.put(StoreContract.StoreEntry.COLUMN_CUST_NAME,custName);
-        values.put(StoreContract.StoreEntry.COLUMN_INV_ITEM,product);
-        values.put(StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES,StringImageUri);
-        values.put(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS,Quantity);
-        values.put(StoreContract.StoreEntry.COLUMN_PRICE,Price);
-        values.put(StoreContract.StoreEntry.COLUMN_SHIP_TO_ADDRESS,address);
-
-        Log.v("my_tag", "mCurrentInvUri is:---------------------------------------- "+mCurrentInvUri.toString());
+        values.put(StoreContract.StoreEntry.COLUMN_CUST_NAME, custName);
+        values.put(StoreContract.StoreEntry.COLUMN_INV_ITEM, product);
+        values.put(StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES, StringImageUri);
+        values.put(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS, Quantity);
+        values.put(StoreContract.StoreEntry.COLUMN_PRICE, Price);
+        values.put(StoreContract.StoreEntry.COLUMN_SHIP_TO_ADDRESS, address);
 
 
         // Determine if this is a new or existing product by checking if mCurrentStoreUri is null or not
@@ -472,7 +470,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-        String[] projection={
+        String[] projection = {
                 StoreContract.StoreEntry._ID,
                 StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES,
                 StoreContract.StoreEntry.COLUMN_CUST_NAME,
@@ -496,18 +494,18 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             return;
         }
 
-        if(cursor.moveToFirst()){
-            int name=cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_CUST_NAME);
-            int product=cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_INV_ITEM);
-            int price=cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_PRICE);
-            int quantity=cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS);
-            int address=cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_SHIP_TO_ADDRESS);
+        if (cursor.moveToFirst()) {
+            int name = cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_CUST_NAME);
+            int product = cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_INV_ITEM);
+            int price = cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_PRICE);
+            int quantity = cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS);
+            int address = cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_SHIP_TO_ADDRESS);
 
-            String custName= cursor.getString(name);
-            int prodName=cursor.getInt(product);
-            String PriceText=cursor.getString(price);
-            int quanText=cursor.getInt(quantity);
-            String shipto=cursor.getString(address);
+            String custName = cursor.getString(name);
+            int prodName = cursor.getInt(product);
+            String PriceText = cursor.getString(price);
+            int quanText = cursor.getInt(quantity);
+            String shipto = cursor.getString(address);
 
             mNameEdit.setText(custName);
             mProdSpinner.setSelection(prodName);
@@ -515,7 +513,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             mQuantity.setText(Integer.toString(quanText));
             mShipto.setText(shipto);
 
-            switch(prodName){
+            switch (prodName) {
                 case StoreContract.StoreEntry.ITEM_GUITAR_JACKSON:
                     mProdSpinner.setSelection(1);
                     break;
@@ -530,9 +528,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                     break;
                 case StoreContract.StoreEntry.ITEM_DRUMKIT_TAMA:
                     mProdSpinner.setSelection(5);
-                    default:
-                        mProdSpinner.setTag(0);
-                        break;
+                default:
+                    mProdSpinner.setTag(0);
+                    break;
             }
         }
 

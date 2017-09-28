@@ -31,8 +31,10 @@ public class StoreContract {
 
         public static final String _ID = BaseColumns._ID;
 
-        /** Customers name*/
-        public static final String COLUMN_CUST_NAME="custName";
+        /**
+         * Customers name
+         */
+        public static final String COLUMN_CUST_NAME = "custName";
 
         /**
          * Inventory item Type:INTEGER Each item will be referenced by a
@@ -41,10 +43,10 @@ public class StoreContract {
 
         public static final String COLUMN_INV_ITEM = "items";
 
-        /** Set string for images
-         *
+        /**
+         * Set string for images
          */
-        public static final String COLUMN_PRODUCT_IMAGES ="images";
+        public static final String COLUMN_PRODUCT_IMAGES = "images";
 
         /**
          * Items available to add to inventory and purchase

@@ -4,36 +4,35 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/store"
-        android:layout_marginTop="108dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/imageView" />
+        android:layout_marginTop="108dp"
+        android:src="@drawable/store" />
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Manages your business locally"
-        android:textSize="11sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
-        android:id="@+id/textView" />
-
+        android:layout_marginTop="16dp"
+        android:text="Manages your business locally"
+        android:textSize="11sp"
+        android:textStyle="bold" />
 
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/inventoryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/inventario"
-        android:scaleType="centerCrop"
-        android:backgroundTint="#faf8f8"
-        android:id="@+id/inventoryButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="125dp" />
+        android:layout_marginBottom="125dp"
+        android:backgroundTint="#faf8f8"
+        android:scaleType="centerCrop"
+        android:src="@drawable/inventario" />
 
 </RelativeLayout>

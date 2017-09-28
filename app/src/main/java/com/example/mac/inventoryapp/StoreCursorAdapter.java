@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ import com.example.mac.inventoryapp.Data.StoreDbHelper;
 public class StoreCursorAdapter extends CursorAdapter {
 
     ImageView imageProduct;
-    TextView product,price,quantity;
+    TextView product, price, quantity;
 
     public StoreCursorAdapter(Context context, Cursor c) {
         super(context, c, 0);
@@ -32,38 +33,38 @@ public class StoreCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.adapter_layout_design,parent,false);
+        return LayoutInflater.from(context).inflate(R.layout.adapter_layout_design, parent, false);
     }
 
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
 
-        imageProduct=(ImageView)view.findViewById(R.id.imageProductType);
-        product=(TextView)view.findViewById(R.id.ListProductName);
-        price=(TextView)view.findViewById(R.id.ListPrice);
-        quantity=(TextView)view.findViewById(R.id.ListQuantity);
+        imageProduct = (ImageView) view.findViewById(R.id.imageProductType);
+        product = (TextView) view.findViewById(R.id.ListProductName);
+        price = (TextView) view.findViewById(R.id.ListPrice);
+        quantity = (TextView) view.findViewById(R.id.ListQuantity);
 
-        int imageColumnIndex=cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES);
-        int productColumnIndex=cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_INV_ITEM);
-        int priceColumnIndex=cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_PRICE);
-        int quantityColumnIndex=cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS);
+        int imageColumnIndex = cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES);
+        int productColumnIndex = cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_INV_ITEM);
+        int priceColumnIndex = cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_PRICE);
+        int quantityColumnIndex = cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS);
         int rowIndex = cursor.getColumnIndex(StoreContract.StoreEntry._ID);
 
         final int rowId = cursor.getInt(rowIndex);
 
 
-        String imageProduct2 =cursor.getString(imageColumnIndex);
-        Uri imageUri =Uri.parse(imageProduct2);
-        String productName=cursor.getString(productColumnIndex);
-        String priceProduct=cursor.getString(priceColumnIndex);
-        String quantityAvailable=cursor.getString(quantityColumnIndex);
+        String imageProduct2 = cursor.getString(imageColumnIndex);
+        Uri imageUri = Uri.parse(imageProduct2);
+        String productName = cursor.getString(productColumnIndex);
+        String priceProduct = cursor.getString(priceColumnIndex);
+        String quantityAvailable = cursor.getString(quantityColumnIndex);
 
         product.setText(productName);
         price.setText(priceProduct);
         imageProduct.setImageURI(imageUri);
         quantity.setText(quantityAvailable);
 
-        Button saleButton=(Button)view.findViewById(R.id.purchaseListView);
+        Button saleButton = (Button) view.findViewById(R.id.purchaseListView);
 
         saleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +76,8 @@ public class StoreCursorAdapter extends CursorAdapter {
                 if (items > 0) {
                     int mQuantitySold = items - 1;
 
+                    Log.v("TAG", " The current ITEMSSS VALUE IS:--------------------------------->" + mQuantitySold);
+
                     ContentValues values = new ContentValues();
 
                     values.put(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS, mQuantitySold);
@@ -82,7 +85,10 @@ public class StoreCursorAdapter extends CursorAdapter {
                     String selection = StoreContract.StoreEntry._ID + "=?";
 
                     String[] selectionArgs = new String[]{String.valueOf(rowId)};
+                    Log.v("my_tag", "row id is:-------------------------------------------> " + rowId);
+
                     int rowsAffected = database.update(StoreContract.StoreEntry.TABLE_NAME, values, selection, selectionArgs);
+
                     if (rowsAffected != -1) {
                         quantity.setText(Integer.toString(mQuantitySold));
                     }

@@ -29,14 +29,10 @@ import com.facebook.stetho.Stetho;
 
 public class InventoryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static final int STORE_LOADER=0;
-
-    private StoreCursorAdapter mCursorAdapter;
-
-    private ListView listView;
-
+    public static final int STORE_LOADER = 0;
     public Uri InventoryCurrentStoreUri;
-
+    private StoreCursorAdapter mCursorAdapter;
+    private ListView listView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,40 +40,40 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_inventory);
 
-        FloatingActionButton fab=(FloatingActionButton)findViewById(R.id.AgregarInventario);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.AgregarInventario);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intEdit=new Intent(getBaseContext(),EditorActivity.class);
+                Intent intEdit = new Intent(getBaseContext(), EditorActivity.class);
                 startActivity(intEdit);
             }
         });
 
-        listView=(ListView)findViewById(R.id.inventoryListView);
+        listView = (ListView) findViewById(R.id.inventoryListView);
 
-        View emptyview= findViewById(R.id.empty_view);
+        View emptyview = findViewById(R.id.empty_view);
         listView.setEmptyView(emptyview);
 
-        mCursorAdapter=new StoreCursorAdapter(this,null);
+        mCursorAdapter = new StoreCursorAdapter(this, null);
 
         listView.setAdapter(mCursorAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent catalogIntent=new Intent(InventoryActivity.this,EditorActivity.class);
-                InventoryCurrentStoreUri=ContentUris.withAppendedId(StoreContract.StoreEntry.CONTENT_URI,id);
+                Intent catalogIntent = new Intent(InventoryActivity.this, EditorActivity.class);
+                InventoryCurrentStoreUri = ContentUris.withAppendedId(StoreContract.StoreEntry.CONTENT_URI, id);
                 catalogIntent.setData(InventoryCurrentStoreUri);
                 startActivity(catalogIntent);
             }
         });
 
-        getSupportLoaderManager().initLoader(STORE_LOADER,null,this);
+        getSupportLoaderManager().initLoader(STORE_LOADER, null, this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_inventory,menu);
+        getMenuInflater().inflate(R.menu.menu_inventory, menu);
         return true;
     }
 
@@ -90,21 +86,11 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         }
         return super.onOptionsItemSelected(item);
     }
-    public void onBuyClick(long id, int quantity) {
-        Uri currentProductUri = ContentUris.withAppendedId(StoreContract.StoreEntry.CONTENT_URI, id);
-        Log.v("CatalogActivity", "Uri: " + currentProductUri);
-        quantity--;
-        ContentValues values = new ContentValues();
-        values.put(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS, quantity);
-        int rowsEffected = getContentResolver().update(currentProductUri, values, null, null);
-        Log.v("TAG","------------>"+rowsEffected);
-    }
-
 
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] projection={
+        String[] projection = {
                 StoreContract.StoreEntry._ID,
                 StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES,
                 StoreContract.StoreEntry.COLUMN_INV_ITEM,
@@ -131,11 +117,10 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
 
     }
 
-    private void deleteInventory(){
-        int rowsDeleted=getContentResolver().delete(StoreContract.StoreEntry.CONTENT_URI,null,null);
-        Log.v("InventoryActivity",rowsDeleted+"Rows deleted form data base");
+    private void deleteInventory() {
+        int rowsDeleted = getContentResolver().delete(StoreContract.StoreEntry.CONTENT_URI, null, null);
+        Log.v("InventoryActivity", rowsDeleted + "Rows deleted form data base");
     }
-
 
 
 }

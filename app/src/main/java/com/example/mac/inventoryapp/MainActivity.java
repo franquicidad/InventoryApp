@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton floatingActionButtonPurchase;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,15 +24,14 @@ public class MainActivity extends AppCompatActivity {
          *
          */
 
-        floatingActionButtonInv=(FloatingActionButton)findViewById(R.id.inventoryButton);
+        floatingActionButtonInv = (FloatingActionButton) findViewById(R.id.inventoryButton);
         floatingActionButtonInv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent invInt=new Intent(getBaseContext(),InventoryActivity.class);
+                Intent invInt = new Intent(getBaseContext(), InventoryActivity.class);
                 startActivity(invInt);
             }
         });
-
 
 
     }
