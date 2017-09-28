@@ -90,6 +90,16 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         }
         return super.onOptionsItemSelected(item);
     }
+    public void onBuyClick(long id, int quantity) {
+        Uri currentProductUri = ContentUris.withAppendedId(StoreContract.StoreEntry.CONTENT_URI, id);
+        Log.v("CatalogActivity", "Uri: " + currentProductUri);
+        quantity--;
+        ContentValues values = new ContentValues();
+        values.put(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS, quantity);
+        int rowsEffected = getContentResolver().update(currentProductUri, values, null, null);
+        Log.v("TAG","------------>"+rowsEffected);
+    }
+
 
 
     @Override
