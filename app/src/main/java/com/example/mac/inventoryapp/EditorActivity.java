@@ -357,10 +357,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String address=mShipto.getText().toString().trim();
 
         Log.v("my_tag","custName is:"+custName);
-        Log.v("my_tag","custName is:"+Price);
-        Log.v("my_tag","custName is:"+Quantity);
-        Log.v("my_tag","custName is:"+product);
-        Log.v("my_tag","custName is:"+address);
+        Log.v("my_tag","price is:"+Price);
+        Log.v("my_tag","quantity is:"+Quantity);
+        Log.v("my_tag","product is:"+product);
+        Log.v("my_tag","address is:"+address);
 
         if( mCurrentInvUri== null &&
                 TextUtils.isEmpty(custName) &&

@@ -177,7 +177,7 @@ public class StoreProvider extends ContentProvider {
         }
         if(contentValues.containsKey(StoreEntry.COLUMN_PRICE)) {
             Integer productPrice = contentValues.getAsInteger(StoreEntry.COLUMN_PRICE);
-            if (productPrice != null) {
+            if (productPrice <=0 || productPrice == 0 || productPrice == null) {
                 throw new IllegalArgumentException("Product requires a Price and cant be less or equal to 0");
             }
         }
