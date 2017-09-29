@@ -143,7 +143,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 intent.setType("text/plain");
                 intent.setData(Uri.parse("mailto:"));
                 intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "New Order");
-                String message = "We need a new order for " + mNameEdit.getText().toString().trim() + "of" + mProdSpinner.getSelectedItem().toString().trim();
+                String message = "We need a new order for " + mNameEdit.getText().toString().trim();
                 intent.putExtra(android.content.Intent.EXTRA_TEXT, message);
 
 
@@ -260,7 +260,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public void onBackPressed() {
-        // If the pet hasn't changed, continue with handling back button press.
+        // If the store hasn't changed, continue with handling back button press.
         if (!mInvHasChanged) {
             super.onBackPressed();
             return;
@@ -299,33 +299,33 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
                 if (!TextUtils.isEmpty(selection)) {
                     if (selection.equals("Headphones")) {
-                        mProdImages.setTag("audifonos.png");
+                        mProdImages.setTag("audifonos");
                         mProduct = StoreContract.StoreEntry.ITEM_HEADPHONES;
                         mProdImages.setImageResource(R.drawable.audifonos);
                         mPriceText.setText("10");
 
                     } else if (selection.equals("Guitar jackson")) {
-                        mProdImages.setTag("jacksonguitar.png");
+                        mProdImages.setTag("jacksonguitar");
                         mProduct = StoreContract.StoreEntry.ITEM_GUITAR_JACKSON;
                         mProdImages.setImageResource(R.drawable.jacksonguitar);
                         mPriceText.setText("1000");
                     } else if (selection.equals("Guitar Esp")) {
-                        mProdImages.setTag("espguitar.png");
+                        mProdImages.setTag("espguitar");
                         mProduct = StoreContract.StoreEntry.ITEM_GUITAR_ESP;
                         mProdImages.setImageResource(R.drawable.espguitar);
                         mPriceText.setText("2000");
                     } else if (selection.equals("Guitar Fender")) {
-                        mProdImages.setTag("fendergui.png");
+                        mProdImages.setTag("fendergui");
                         mProduct = StoreContract.StoreEntry.ITEM_GUITAR_FENDER;
                         mProdImages.setImageResource(R.drawable.fendergui);
                         mPriceText.setText("1500");
                     } else if (selection.equals("Mapex Drums")) {
-                        mProdImages.setTag("mapexdrum.png");
+                        mProdImages.setTag("mapexdrum");
                         mProduct = StoreContract.StoreEntry.ITEM_DRUMKIT_MAPEX;
                         mProdImages.setImageResource(R.drawable.mapexdrum);
                         mPriceText.setText("3000");
                     } else if (selection.equals("Tama Drums")) {
-                        mProdImages.setTag("tamadrum.png");
+                        mProdImages.setTag("tamadrum");
                         mProduct = StoreContract.StoreEntry.ITEM_DRUMKIT_TAMA;
                         mProdImages.setImageResource(R.drawable.tamadrum);
                         mPriceText.setText("6000");
