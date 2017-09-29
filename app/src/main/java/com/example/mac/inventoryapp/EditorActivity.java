@@ -502,10 +502,20 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             int address = cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_SHIP_TO_ADDRESS);
 
             String custName = cursor.getString(name);
+            Log.v("TAG", "--------------->>   The Customers name is: "+custName);
+
             int prodName = cursor.getInt(product);
+            Log.v("TAG", "--------------->>   The product name is: "+prodName);
+
             String PriceText = cursor.getString(price);
+            Log.v("TAG", "--------------->>   The Price is: "+PriceText);
+
             int quanText = cursor.getInt(quantity);
+            Log.v("TAG", "--------------->>   The quantity is: "+quanText);
+
             String shipto = cursor.getString(address);
+            Log.v("TAG", "--------------->>   The Customers name is: "+shipto);
+
 
             mNameEdit.setText(custName);
             mProdSpinner.setSelection(prodName);
