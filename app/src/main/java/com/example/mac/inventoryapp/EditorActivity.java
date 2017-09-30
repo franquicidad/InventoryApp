@@ -520,7 +520,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             mNameEdit.setText(custName);
             mProdSpinner.setSelection(prodName);
             mPriceText.setText(PriceText);
-            mQuantity.setText(Integer.toString(quanText));
+            mQuantity.setText(quanText);
             mShipto.setText(shipto);
 
             switch (prodName) {
@@ -547,9 +547,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     }
 
-    private void image(View view){
 
-    }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {

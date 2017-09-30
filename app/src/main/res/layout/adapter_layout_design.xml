@@ -75,12 +75,12 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/QuantityUnitsText"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:paddingLeft="6dp"
                     android:text="Quantity:"
-
                     android:textStyle="bold" />
 
                 <TextView

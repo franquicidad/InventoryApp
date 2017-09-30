@@ -25,7 +25,7 @@ import com.example.mac.inventoryapp.Data.StoreDbHelper;
 public class StoreCursorAdapter extends CursorAdapter {
 
     ImageView imageProduct;
-    TextView product, price, quantity;
+    TextView product, price;
 
     public StoreCursorAdapter(Context context, Cursor c) {
         super(context, c, 0);
@@ -39,10 +39,13 @@ public class StoreCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
 
+        final TextView quantity=(TextView)view.findViewById(R.id.ListQuantity);
+
+
+
         imageProduct = (ImageView) view.findViewById(R.id.imageProductType);
         product = (TextView) view.findViewById(R.id.ListProductName);
         price = (TextView) view.findViewById(R.id.ListPrice);
-        quantity = (TextView) view.findViewById(R.id.ListQuantity);
 
         int imageColumnIndex = cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES);
         int productColumnIndex = cursor.getColumnIndexOrThrow(StoreContract.StoreEntry.COLUMN_INV_ITEM);
@@ -71,6 +74,7 @@ public class StoreCursorAdapter extends CursorAdapter {
             public void onClick(View view) {
                 StoreDbHelper dbHelper = new StoreDbHelper(context);
                 SQLiteDatabase database = dbHelper.getWritableDatabase();
+
 
                 int items = Integer.parseInt(quantity.getText().toString());
                 if (items > 0) {
