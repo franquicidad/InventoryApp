@@ -68,6 +68,7 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
                 startActivity(catalogIntent);
             }
         });
+        Log.v("TAG", "The Uri is---------------------   /////  ------->>>>>>>"+ InventoryCurrentStoreUri);
 
         getSupportLoaderManager().initLoader(STORE_LOADER, null, this);
     }

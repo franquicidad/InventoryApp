@@ -348,7 +348,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         int Price = Integer.parseInt(mPriceText.getText().toString().trim());
         String StringImageUri = String.valueOf(Uri.parse("android.resource://com.example.mac.inventoryapp/drawable/" + mProdImages.getTag()));
         String Quantity = mQuantity.getText().toString().trim();
-        String product = mProdSpinner.getSelectedItem().toString();
+        int product = mProdSpinner.getSelectedItemPosition();
         String address = mShipto.getText().toString().trim();
 
         Log.v("my_tag", "custName is:" + custName);
@@ -359,8 +359,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         if (mCurrentInvUri == null &&
                 TextUtils.isEmpty(custName) &&
-                TextUtils.isEmpty(Quantity) &&
-                TextUtils.isEmpty(product) &&
                 TextUtils.isEmpty(address)) {
             Toast.makeText(this, "Please enter all the fields of the product", Toast.LENGTH_LONG).show();
 
@@ -495,8 +493,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         }
 
         if (cursor.moveToFirst()) {
+            
             int name = cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_CUST_NAME);
             int product = cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_INV_ITEM);
+            int image=cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES);
             int price = cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_PRICE);
             int quantity = cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS);
             int address = cursor.getColumnIndex(StoreContract.StoreEntry.COLUMN_SHIP_TO_ADDRESS);
@@ -538,11 +538,16 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                     break;
                 case StoreContract.StoreEntry.ITEM_DRUMKIT_TAMA:
                     mProdSpinner.setSelection(5);
+                    break;
                 default:
-                    mProdSpinner.setTag(0);
+                    mProdSpinner.setSelection(0);
                     break;
             }
         }
+
+    }
+
+    private void image(View view){
 
     }
 

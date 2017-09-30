@@ -168,7 +168,7 @@ public class StoreProvider extends ContentProvider {
 
     private int updateInv(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
         if (contentValues.containsKey(StoreEntry.COLUMN_INV_ITEM)) {
-            String productName = contentValues.getAsString(StoreEntry.COLUMN_INV_ITEM);
+            Integer productName = contentValues.getAsInteger(StoreEntry.COLUMN_INV_ITEM);
             if (productName == null) {
                 throw new IllegalArgumentException("Product requires a name");
             }

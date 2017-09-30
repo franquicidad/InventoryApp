@@ -38,7 +38,7 @@ public class StoreDbHelper extends SQLiteOpenHelper {
                 + StoreEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + StoreEntry.COLUMN_PRODUCT_IMAGES + " TEXT NOT NULL, "
                 + StoreEntry.COLUMN_CUST_NAME + " TEXT NOT NULL, "
-                + StoreEntry.COLUMN_INV_ITEM + " TEXT NOT NULL, "
+                + StoreEntry.COLUMN_INV_ITEM + " INTEGER NOT NULL, "
                 + StoreEntry.COLUMN_PRICE + " INTEGER NOT NULL DEFAULT 0, "
                 + StoreEntry.COLUMN_AVAILABLE_UNITS + " INTEGER NOT NULL DEFAULT 0, "
                 + StoreEntry.COLUMN_SHIP_TO_ADDRESS + " TEXT NOT NULL);";
