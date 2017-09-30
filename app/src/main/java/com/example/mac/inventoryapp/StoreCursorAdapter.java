@@ -63,6 +63,7 @@ public class StoreCursorAdapter extends CursorAdapter {
         String quantityAvailable = cursor.getString(quantityColumnIndex);
 
         product.setText(productName);
+        Log.v("TAG", "The product name is----------->>>>>>>>>>>>>>>>"+productName);
         price.setText(priceProduct);
         imageProduct.setImageURI(imageUri);
         quantity.setText(quantityAvailable);
@@ -94,7 +95,7 @@ public class StoreCursorAdapter extends CursorAdapter {
                     int rowsAffected = database.update(StoreContract.StoreEntry.TABLE_NAME, values, selection, selectionArgs);
 
                     if (rowsAffected != -1) {
-                        quantity.setText(Integer.toString(mQuantitySold));
+                        quantity.setText(String.valueOf(mQuantitySold));
                     }
                 } else
                     Toast.makeText(context, "No Stock Left ", Toast.LENGTH_SHORT).show();

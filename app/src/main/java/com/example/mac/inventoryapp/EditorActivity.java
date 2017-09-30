@@ -521,9 +521,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             mNameEdit.setText(custName);
             mProdSpinner.setSelection(prodName);
             mPriceText.setText(PriceText);
-            String setQuantity= String.valueOf(quanText);
+            String setQuantity=String.valueOf(quanText);
             mQuantity.setText(setQuantity);
-            Log.v("TAG","The value to put here is--------------->"+ setQuantity);
             mShipto.setText(shipto);
 
             switch (prodName) {
