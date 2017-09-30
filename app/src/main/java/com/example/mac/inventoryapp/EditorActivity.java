@@ -523,6 +523,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             mPriceText.setText(PriceText);
             String setQuantity= String.valueOf(quanText);
             mQuantity.setText(setQuantity);
+            Log.v("TAG","The value to put here is--------------->"+ setQuantity);
             mShipto.setText(shipto);
 
             switch (prodName) {
