@@ -511,6 +511,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             Log.v("TAG", "--------------->>   The Price is: "+PriceText);
 
             int quanText = cursor.getInt(quantity);
+
             Log.v("TAG", "--------------->>   The quantity is: "+quanText);
 
             String shipto = cursor.getString(address);
@@ -520,7 +521,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             mNameEdit.setText(custName);
             mProdSpinner.setSelection(prodName);
             mPriceText.setText(PriceText);
-            mQuantity.setText(quanText);
+            String setQuantity= String.valueOf(quanText);
+            mQuantity.setText(setQuantity);
             mShipto.setText(shipto);
 
             switch (prodName) {
