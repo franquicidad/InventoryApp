@@ -59,10 +59,26 @@ public class StoreCursorAdapter extends CursorAdapter {
         String imageProduct2 = cursor.getString(imageColumnIndex);
         Uri imageUri = Uri.parse(imageProduct2);
         String productName = cursor.getString(productColumnIndex);
+
+        int productInt=Integer.parseInt(productName);
+        String ProductName;
+        if(productInt==0){
+            ProductName="Headphones";
+        }else if(productInt==1){
+            ProductName="Guitar Jackson";
+        }else if(productInt==2){
+            ProductName="Guitar Esp";
+        }else if(productInt==3){
+            ProductName="Guitar Fender";
+        }else if(productInt== 4){
+            ProductName="Mapex Drums";
+        }else{
+            ProductName="Tama Drums";
+        }
         String priceProduct = cursor.getString(priceColumnIndex);
         String quantityAvailable = cursor.getString(quantityColumnIndex);
 
-        product.setText(productName);
+        product.setText(ProductName);
         Log.v("TAG", "The product name is----------->>>>>>>>>>>>>>>>"+productName);
         price.setText(priceProduct);
         imageProduct.setImageURI(imageUri);

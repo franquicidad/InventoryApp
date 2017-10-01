@@ -161,7 +161,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         switch (item.getItemId()) {
             case R.id.action_save:
                 saveProduct();
-                finish();
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
@@ -350,9 +349,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String Quantity = mQuantity.getText().toString().trim();
         int product = mProdSpinner.getSelectedItemPosition();
 
-        String StringValue =String.valueOf(product);
-
-
         Log.v("TAG","PRODUUUUUUUUUUUUUUUCTT"+product);
         String address = mShipto.getText().toString().trim();
 
@@ -362,8 +358,13 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         Log.v("my_tag", "product is:" + product);
         Log.v("my_tag", "address is:" + address);
 
+        /** Enter validation for the EditText fields didnt include the
+         * StringImageUri because there will always be a product in the spinner
+         * and if there is a product in the spinner there will always be an image.
+         */
+
         if (mCurrentInvUri == null &&
-                TextUtils.isEmpty(custName) &&
+                TextUtils.isEmpty(custName) ||
                 TextUtils.isEmpty(address)) {
             Toast.makeText(this, "Please enter all the fields of the product", Toast.LENGTH_LONG).show();
 
@@ -374,11 +375,14 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             Toast.makeText(this, " Please enter your name", Toast.LENGTH_LONG).show();
             return;
         }
+        finish();
+
+
 
         ContentValues values = new ContentValues();
 
         values.put(StoreContract.StoreEntry.COLUMN_CUST_NAME, custName);
-        values.put(StoreContract.StoreEntry.COLUMN_INV_ITEM, StringValue);
+        values.put(StoreContract.StoreEntry.COLUMN_INV_ITEM, product);
         Log.v("TAG"," Product Spinner position------------------------->>>>>>"+product);
         Log.v("TAG"," Product Spinner position------------------------->>>>>>"+ StoreContract.StoreEntry.COLUMN_INV_ITEM);
 
