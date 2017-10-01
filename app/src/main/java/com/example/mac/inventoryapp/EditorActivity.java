@@ -349,6 +349,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String StringImageUri = String.valueOf(Uri.parse("android.resource://com.example.mac.inventoryapp/drawable/" + mProdImages.getTag()));
         String Quantity = mQuantity.getText().toString().trim();
         int product = mProdSpinner.getSelectedItemPosition();
+
+        String StringValue =String.valueOf(product);
+
+
+        Log.v("TAG","PRODUUUUUUUUUUUUUUUCTT"+product);
         String address = mShipto.getText().toString().trim();
 
         Log.v("my_tag", "custName is:" + custName);
@@ -373,11 +378,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         ContentValues values = new ContentValues();
 
         values.put(StoreContract.StoreEntry.COLUMN_CUST_NAME, custName);
-        values.put(StoreContract.StoreEntry.COLUMN_INV_ITEM, product);
+        values.put(StoreContract.StoreEntry.COLUMN_INV_ITEM, StringValue);
+        Log.v("TAG"," Product Spinner position------------------------->>>>>>"+product);
+        Log.v("TAG"," Product Spinner position------------------------->>>>>>"+ StoreContract.StoreEntry.COLUMN_INV_ITEM);
+
         values.put(StoreContract.StoreEntry.COLUMN_PRODUCT_IMAGES, StringImageUri);
         values.put(StoreContract.StoreEntry.COLUMN_AVAILABLE_UNITS, Quantity);
         values.put(StoreContract.StoreEntry.COLUMN_PRICE, Price);
         values.put(StoreContract.StoreEntry.COLUMN_SHIP_TO_ADDRESS, address);
+
 
 
         // Determine if this is a new or existing product by checking if mCurrentStoreUri is null or not
@@ -478,7 +487,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 StoreContract.StoreEntry.COLUMN_SHIP_TO_ADDRESS
         };
         return new CursorLoader(this,
-                StoreContract.StoreEntry.CONTENT_URI,
+                mCurrentInvUri,
                 projection,
                 null,
                 null,
@@ -520,6 +529,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
             mNameEdit.setText(custName);
             mProdSpinner.setSelection(prodName);
+
             mPriceText.setText(PriceText);
             String setQuantity=String.valueOf(quanText);
             mQuantity.setText(setQuantity);
@@ -531,6 +541,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                     break;
                 case StoreContract.StoreEntry.ITEM_GUITAR_ESP:
                     mProdSpinner.setSelection(2);
+
                     break;
                 case StoreContract.StoreEntry.ITEM_GUITAR_FENDER:
                     mProdSpinner.setSelection(3);

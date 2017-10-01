@@ -196,6 +196,7 @@ public class StoreProvider extends ContentProvider {
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
+
         // Returns the number of database rows affected by the update statement
         return rowsUpdated;
     }
