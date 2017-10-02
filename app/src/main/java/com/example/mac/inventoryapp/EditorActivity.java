@@ -350,20 +350,27 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     private void saveProduct() {
+
         String custName = mNameEdit.getText().toString().trim();
-        int Price = Integer.parseInt(mPriceText.getText().toString().trim());
+
+        int PriceEntryLength=mPriceText.getText().toString().trim().length();
+        String StringLength=String.valueOf(PriceEntryLength);
+
+        if(PriceEntryLength>0){
+           Integer.parseInt(mPriceText.getText().toString().trim());
+        }else{
+            Toast.makeText(this,"Please insert a numerical Price to the product",Toast.LENGTH_LONG).show();
+
+        }
+
+
         String StringImageUri = String.valueOf(Uri.parse("android.resource://com.example.mac.inventoryapp/drawable/" + mProdImages.getTag()));
         String Quantity = mQuantity.getText().toString().trim();
         int product = mProdSpinner.getSelectedItemPosition();
 
-        Log.v("TAG","PRODUUUUUUUUUUUUUUUCTT"+product);
         String address = mShipto.getText().toString().trim();
 
-        Log.v("my_tag", "custName is:" + custName);
-        Log.v("my_tag", "price is:" + Price);
-        Log.v("my_tag", "quantity is:" + Quantity);
-        Log.v("my_tag", "product is:" + product);
-        Log.v("my_tag", "address is:" + address);
+
 
         /** Enter validation for the EditText fields didnt include the
          * StringImageUri because there will always be a product in the spinner
@@ -372,9 +379,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         if (mCurrentInvUri == null &&
                 TextUtils.isEmpty(custName) ||
+                TextUtils.isEmpty(String.valueOf(Price))||
                 TextUtils.isEmpty(address)) {
             Toast.makeText(this, "Please enter all the fields of the product", Toast.LENGTH_LONG).show();
-
             return;
         }
         ;
@@ -383,8 +390,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             return;
         }
         finish();
-
-
 
         ContentValues values = new ContentValues();
 
