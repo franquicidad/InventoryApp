@@ -200,7 +200,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         }
         quantityCountVariable++;
 
-        mQuantity.setText(" " + quantityCountVariable);
+        mQuantity.setText(" " + String.valueOf(quantityCountVariable));
     }
 
     /**
@@ -213,7 +213,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             return;
         }
         quantityCountVariable--;
-        mQuantity.setText(quantityCountVariable);
+        mQuantity.setText(String.valueOf(quantityCountVariable));
     }
 
     @Override

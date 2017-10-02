@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">InventoryApp</string>
+    <string name="units_available">Units Available</string>
+    <string name="enter_your_name">Enter your Name</string>
+    <string name="customers_name">Customers name</string>
+    <string name="product">Product</string>
+    <string name="price">Price</string>
+    <string name="minus">-</string>
+    <string name="_0">0</string>
+    <string name="plus">+</string>
+    <string name="address_to_ship_to">Address to ship to</string>
+    <string name="address_for_delivery">Address for delivery</string>
+    <string name="order_inventory_to_provider">Order Inventory to provider</string>
+    <string name="buy">Buy</string>
+    <string name="quantity">Quantity:</string>
+    <string name="pricing">Price:</string>
+    <string name="manages_your_business_locally">Manages your business locally</string>
+    <string name="to_add_a_new_product_n_click_on_the_inventory_button_above">To add a new product   click on the inventory button above</string>
+    <string name="desPrice">Please enter desired price</string>
 </resources>

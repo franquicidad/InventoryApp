@@ -23,10 +23,10 @@
             android:id="@+id/vacio"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:layout_alignEnd="@+id/desImagenVacio"
-            android:layout_alignParentTop="true"
             android:layout_marginTop="55dp"
-            android:src="@drawable/espacio_vacio" />
+            android:src="@drawable/espacio_vacio"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/desImagenVacio"
@@ -35,7 +35,7 @@
             android:layout_below="@+id/vacio"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="14dp"
-            android:text="To add a new product \n click on the inventory button above"
+            android:text="@string/to_add_a_new_product_n_click_on_the_inventory_button_above"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textSize="20sp"

@@ -94,7 +94,7 @@ public class StoreCursorAdapter extends CursorAdapter {
 
 
                 int items = Integer.parseInt(quantity.getText().toString());
-                if (items > 0) {
+                if (items >= 0) {
                     int mQuantitySold = items - 1;
 
                     Log.v("TAG", " The current ITEMSSS VALUE IS:--------------------------------->" + mQuantitySold);
@@ -113,8 +113,9 @@ public class StoreCursorAdapter extends CursorAdapter {
                     if (rowsAffected != -1) {
                         quantity.setText(String.valueOf(mQuantitySold));
                     }
-                } else
-                    Toast.makeText(context, "No Stock Left ", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Order the negative units from the provider to proceed! ", Toast.LENGTH_LONG).show();
+                }
             }
 
         });

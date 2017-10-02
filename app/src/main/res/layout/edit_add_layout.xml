@@ -14,8 +14,8 @@
             android:layout_width="150dp"
             android:layout_height="165dp"
             android:layout_marginLeft="120dp"
-            android:scaleType="centerCrop"
             android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
             android:tag="edit_layout_imageview" />
 
     </LinearLayout>
@@ -33,7 +33,7 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-                android:text="Enter your Name"
+                android:text="@string/enter_your_name"
                 android:textColor="@android:color/holo_red_dark"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -46,14 +46,13 @@
                 android:id="@+id/enterName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Customers name"
+                android:hint="@string/customers_name"
                 android:textSize="20sp"
                 android:textStyle="italic" />
         </LinearLayout>
 
 
     </LinearLayout>
-    //Second entry
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,7 +67,7 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-                android:text="Product"
+                android:text="@string/product"
 
                 android:textColor="@android:color/holo_red_dark"
                 android:textStyle="bold" />
@@ -100,8 +99,7 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-
-                android:text="Price"
+                android:text="@string/price"
                 android:textColor="@android:color/holo_red_dark"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -111,13 +109,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <EditText
                 android:id="@+id/price"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:paddingTop="10dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:hint="@string/desPrice"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -136,8 +134,7 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-                android:text="Units Available"
-
+                android:text="@string/units_available"
                 android:textColor="@android:color/holo_red_dark"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -150,7 +147,7 @@
                 android:id="@+id/MinusButton"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="-" />
+                android:text="@string/minus" />
 
             <TextView
                 android:id="@+id/QuantityUnitsText"
@@ -158,14 +155,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="0"
+                android:text="@string/_0"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/PlusButton"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="+" />
+                android:text="@string/plus" />
         </LinearLayout>
     </LinearLayout>
 
@@ -182,7 +179,7 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-                android:text="Address to ship to"
+                android:text="@string/address_to_ship_to"
 
                 android:textColor="@android:color/holo_red_dark"
                 android:textStyle="bold" />
@@ -196,7 +193,7 @@
                 android:id="@+id/EditAddress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Address for delivery"
+                android:hint="@string/address_for_delivery"
                 android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
@@ -205,7 +202,7 @@
         android:id="@+id/orderInventory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Order Inventory to provider" />
+        android:text="@string/order_inventory_to_provider" />
 
 
 </LinearLayout>
