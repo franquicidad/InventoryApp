@@ -44,7 +44,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
      */
     private static final int EDITOR_LOADER = 0;
     public Uri imageUri;
-    int quantityCountVariable = 0;
     /**
      * Global variables for views on the Layout
      */
@@ -69,6 +68,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private int mProduct = 0;
     private boolean mStoreHasChanged = false;
     private String stringCurrentInvUri;
+    private int currentValue;
     private View.OnTouchListener mTouchlistener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -194,13 +194,17 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
      */
 
     public void increment(View view) {
-        if (quantityCountVariable == 50) {
+        int quantityCountvariable=0;
+        if (quantityCountvariable == 50) {
             Toast.makeText(this, "You cannot order more than 50 units", Toast.LENGTH_LONG).show();
             return;
         }
-        quantityCountVariable++;
+        currentValue=Integer.parseInt(mQuantity.getText().toString().trim());
+        quantityCountvariable=currentValue++;
 
-        mQuantity.setText(" " + String.valueOf(quantityCountVariable));
+        Log.v("TAG", "Quantity at the click :"+currentValue);
+
+        mQuantity.setText(String.valueOf(currentValue));
     }
 
     /**
@@ -208,12 +212,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
      */
 
     public void decrement(View view) {
-        if (quantityCountVariable <= 0) {
-            Toast.makeText(this, "You cant less than 0 of a product!", Toast.LENGTH_LONG).show();
+        currentValue=Integer.parseInt(mQuantity.getText().toString().trim());
+
+        if(currentValue==0){
+            Toast.makeText(this, "You cannot have negative units of the product", Toast.LENGTH_LONG).show();
             return;
         }
-        quantityCountVariable--;
-        mQuantity.setText(String.valueOf(quantityCountVariable));
+        currentValue--;
+
+        mQuantity.setText(String.valueOf(currentValue));
     }
 
     @Override

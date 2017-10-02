@@ -92,9 +92,8 @@ public class StoreCursorAdapter extends CursorAdapter {
                 StoreDbHelper dbHelper = new StoreDbHelper(context);
                 SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-
                 int items = Integer.parseInt(quantity.getText().toString());
-                if (items >= 0) {
+                if (items > 0) {
                     int mQuantitySold = items - 1;
 
                     Log.v("TAG", " The current ITEMSSS VALUE IS:--------------------------------->" + mQuantitySold);
@@ -114,7 +113,7 @@ public class StoreCursorAdapter extends CursorAdapter {
                         quantity.setText(String.valueOf(mQuantitySold));
                     }
                 } else {
-                    Toast.makeText(context, "Order the negative units from the provider to proceed! ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "No stock left ", Toast.LENGTH_LONG).show();
                 }
             }
 
